@@ -1,20 +1,37 @@
-import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateUserDto } from './dtos/create-user.dto';
+import { Controller, Get, Post, Body, Patch, Param, Delete, SetMetadata } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UpdateUserDTO } from './dtos/update-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
-@ApiTags('User')
-@ApiBearerAuth()
-@Controller('user')
+const PUBLISH_KEY = 'isPublishKey';
+export const Publish = () => SetMetadata(PUBLISH_KEY, true);
+
+@Controller('api/user')
 export class UserController {
-  constructor(private readonly userService: UserService,
-    ) {}
-  @Get()
+  constructor(private readonly userService: UserService) {}
 
-  findAllUsers() {
+  @Post()
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.userService.create(createUserDto);
+  }
+
+  @Get()
+  findAll() {
     return this.userService.findAll();
   }
 
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.userService.findOne(+id);
+  }
 
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.update(+id, updateUserDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.userService.remove(+id);
+  }
 }

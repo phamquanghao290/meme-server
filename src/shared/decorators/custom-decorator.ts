@@ -1,5 +1,5 @@
 import { ApiBody, ApiResponse } from "@nestjs/swagger";
-import { CreateUserDto } from "src/modules/user/dtos/create-user.dto";
+import { CreateUserDto } from "../../modules/user/dto/create-user.dto";
 
 export function ApiResponseAndBodyForCreateUser() {
     return function(target: any, key: string, descriptor: PropertyDescriptor) {
