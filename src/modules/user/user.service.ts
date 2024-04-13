@@ -1,9 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Param, SetMetadata } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+
+const PUBLISH_KEY = 'isPublishKey';
+export const Publish = () => SetMetadata(PUBLISH_KEY, true);
 
 @Injectable()
 export class UserService {
@@ -22,6 +25,25 @@ export class UserService {
       .execute();
   }
 
+  async updateStatusUser(id: number) {
+    const result = await this.userRepository.findOne({ where: { id: +id } });
+    if(result.status == 0) {
+      return this.userRepository
+        .createQueryBuilder('users')
+        .update(User)
+        .set({ status: 1 })
+        .where({ id: +id })
+        .execute();
+    }else{
+      return this.userRepository
+        .createQueryBuilder('users')
+        .update(User)
+        .set({ status: 0 })
+        .where({ id: +id })
+        .execute();
+    }
+  }
+
   findAll() {
     return `This action returns all user`;
   }
@@ -30,9 +52,7 @@ export class UserService {
     return `This action returns a #${id} user`;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+  
 
   remove(id: number) {
     return `This action removes a #${id} user`;

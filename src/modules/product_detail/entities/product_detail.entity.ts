@@ -15,7 +15,10 @@ export class ProductDetail {
   @JoinColumn({ name: 'product_id' })
   product: Product;
 
-  @Column()
+  @Column({
+    nullable: true,
+    type: 'text',
+  })
   description: string;
 
   @OneToMany(() => Cart, (cart) => cart.product_detail_id)

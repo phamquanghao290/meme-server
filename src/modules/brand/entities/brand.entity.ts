@@ -9,7 +9,9 @@ export class Brand {
     @Column()
     nameBrand: string;
 
-    @Column()
+    @Column({
+        type: 'text',
+    })
     image_brand: string;
 
     @OneToMany(() => Product, (product) => product.brand, { cascade: true })

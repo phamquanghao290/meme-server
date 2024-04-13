@@ -10,7 +10,10 @@ export class Address {
     @JoinColumn({ name: 'user_id' })
     user: User;
 
-    @Column()
+    @Column({
+        nullable: true,
+        type: 'text',
+    })
     nameAddress: string;
 
     @Column()

@@ -6,6 +6,14 @@ import { ProductDetail } from 'src/modules/product_detail/entities/product_detai
 import { Size } from 'src/modules/size/entities/size.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
+enum Rating {
+  One = 1,
+  Two = 2,
+  Three = 3,
+  Four = 4,
+  Five = 5,
+}
+
 @Entity('products')
 export class Product {
   @PrimaryGeneratedColumn()
@@ -22,14 +30,19 @@ export class Product {
   price: number;
 
   @Column({
-
+    nullable: true,
+    type: 'text',
   })
   image: string;
 
   @Column()
   stock: number;
 
-  @Column()
+  @Column({
+    nullable: true,
+    type: 'enum',
+    enum: Rating,
+  })
   rate: number;
 
   @ManyToOne(() => Category, (category) => category.product)

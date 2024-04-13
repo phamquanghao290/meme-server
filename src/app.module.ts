@@ -30,6 +30,7 @@ import { ProductDetail } from './modules/product_detail/entities/product_detail.
 import { ProductDetailModule } from './modules/product_detail/product_detail.module';
 import { SizeColor } from './modules/size_color/entities/size_color.entity';
 import { SizeColorModule } from './modules/size_color/size_color.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 
 
@@ -44,10 +45,7 @@ import { SizeColorModule } from './modules/size_color/size_color.module';
       database: 'ojt-ec',
       entities: [User, Size, Product, Brand, Category, Image, Order, Color, Address, FavoriteProduct, OrderDetail, Cart, ProductDetail, SizeColor],
       synchronize: true,
-    }),
-    MulterModule.register({
-      dest: './uploads', // Đường dẫn tới thư mục lưu trữ file tải lên
-    }),
+    }), 
     UserModule,
     SizeModule, 
     ProductsModule, 
@@ -61,7 +59,8 @@ import { SizeColorModule } from './modules/size_color/size_color.module';
     OrderDetailModule,
     CartModule,
     ProductDetailModule,
-    SizeColorModule
+    SizeColorModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],

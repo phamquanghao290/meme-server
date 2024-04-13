@@ -12,22 +12,25 @@ import { ConfigService } from '@nestjs/config';
 import { ServiceAccount } from 'firebase-admin';
 
 async function bootstrap() {
-  const PORT = process.env.PORT || 8080;
+  const PORT = 8080;
   const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  app.enableCors();
   // app.use(formidable())  ;
   // app.use(multer().none());
-  app.enableCors();
-  app.useGlobalPipes(new ValidationPipe());
-  app.use(
-    // Paths you want to protect with basic auth
-    "/docs*",
-    basicAuth({
-      challenge: true,
-      users: {
-        yourUserName: "p4ssw0rd",
-      },
-    })
-  );
+  // app.enableCors();
+  // app.useGlobalPipes(new ValidationPipe());
+  // app.use(
+  //   // Paths you want to protect with basic auth
+  //   "/docs*",
+  //   basicAuth({
+  //     challenge: true,
+  //     users: {
+  //       yourUserName: "p4ssw0rd",
+  //     },
+  //   })
+  // );
 
   // Kêt nối firebase
 
@@ -45,19 +48,19 @@ async function bootstrap() {
 //   }); 
   // Sử dụng middleware express-formidable
   
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
-  useContainer(app.select(AppModule), { fallbackOnErrors: true });
+  // app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  // useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api-docs', app, document,  {
-    swaggerOptions: {
-      security: [{ 'bearer': [] }],
-    },
-  });
+  // const document = SwaggerModule.createDocument(app, config);
+  // SwaggerModule.setup('api-docs', app, document,  {
+  //   swaggerOptions: {
+  //     security: [{ 'bearer': [] }],
+  //   },
+  // });
 
   await app.listen(PORT, () => {
     console.log(`App listen on port: http://localhost:${PORT}`);
-    console.log(`Swagger-UI listen on: http://localhost:${PORT}/api-docs`);
+    // console.log(`Swagger-UI listen on: http://localhost:${PORT}/api-docs`);
   });
 }
 bootstrap();

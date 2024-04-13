@@ -25,9 +25,13 @@ export class UserController {
     return this.userService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+  @Patch('/status/:id')
+  async changeStatus(@Param('id') id: string) {
+    const result = await this.userService.updateStatusUser(+id);
+    return {
+      message: 'Update success',
+      data: result
+    }
   }
 
   @Delete(':id')

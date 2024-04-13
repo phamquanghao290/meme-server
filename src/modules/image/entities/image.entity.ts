@@ -6,7 +6,10 @@ export class Image {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({
+        nullable: true,
+        type: 'text',
+    })
     url: string;
 
     @OneToMany(() => ProductDetail, (productDetail) => productDetail.imageId)

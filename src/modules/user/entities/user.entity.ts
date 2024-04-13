@@ -25,8 +25,8 @@ export class User {
     @Column()
     phone: string;
 
-    @Column()
-    avatar: string;
+    // @Column()
+    // avatar?: string;
 
     @Column({
         type: 'int',
