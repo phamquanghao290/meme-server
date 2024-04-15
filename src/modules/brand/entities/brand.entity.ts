@@ -6,12 +6,12 @@ export class Brand {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    nameBrand: string;
-
     @Column({
         type: 'text',
     })
+    nameBrand: string;
+
+    @Column()
     image_brand: string;
 
     @OneToMany(() => Product, (product) => product.brand, { cascade: true })
