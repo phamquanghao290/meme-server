@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { BannerService } from './banner.service';
 import { CreateBannerDto } from './dto/create-banner.dto';
 import { UpdateBannerDto } from './dto/update-banner.dto';
@@ -8,13 +16,14 @@ export class BannerController {
   constructor(private readonly bannerService: BannerService) {}
 
   @Post()
-  create(@Body() createBannerDto: CreateBannerDto) {
-    const newBanner = this.bannerService.create(createBannerDto);
+  create(@Body() createBannerDto: any) {
+    const { id, ...rest } = createBannerDto;
+    const newBanner = this.bannerService.create(rest);
     const allBanner = this.bannerService.findAll();
     return {
-      message:"Them thanh cong",
-      data:allBanner
-    }
+      message: 'Them thanh cong',
+      data: allBanner,
+    };
   }
 
   @Get()
@@ -31,18 +40,18 @@ export class BannerController {
   update(@Param('id') id: string, @Body() updateBannerDto: UpdateBannerDto) {
     const result = this.bannerService.update(+id, updateBannerDto);
     return {
-      message:"Cap nhat thanh cong",
-      result
-    }
+      message: 'Cap nhat thanh cong',
+      result,
+    };
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    const result = await this.bannerService.remove(+id);
-    const allBanner = this.bannerService.findAll();
+  async remove(@Param('id') id: number) {
+    console.log(id);
+    const deletedId = await this.bannerService.remove(id);
     return {
-      message:"Xoa thanh cong",
-      data: allBanner
-    }
+      message: 'Xóa thành công',
+      deletedId: deletedId,
+    };
   }
 }

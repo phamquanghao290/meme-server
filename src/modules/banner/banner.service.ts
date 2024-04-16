@@ -19,7 +19,7 @@ export class BannerService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} banner`;
+    return 
   }
 
   async update(id: number, updateBannerDto: UpdateBannerDto) {
@@ -32,10 +32,8 @@ export class BannerService {
   }
 
   async remove(id: number) {
-    try {
-      return await this.bannerRepos.delete(id);
-    } catch (error) {
-      console.log(error)
-    }
+    console.log(id)
+    const result = await this.bannerRepos.delete(id);
+    return result
   }
 }
