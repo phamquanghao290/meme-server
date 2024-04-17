@@ -3,18 +3,19 @@ import { FavoriteProductService } from './favorite_product.service';
 import { CreateFavoriteProductDto } from './dto/create-favorite_product.dto';
 import { UpdateFavoriteProductDto } from './dto/update-favorite_product.dto';
 
-@Controller('favorite-product')
+@Controller('api/v1/favorite-product')
 export class FavoriteProductController {
   constructor(private readonly favoriteProductService: FavoriteProductService) {}
 
-  @Post()
-  create(@Body() createFavoriteProductDto: CreateFavoriteProductDto) {
-    return this.favoriteProductService.create(createFavoriteProductDto);
+  @Post(':id')
+  create( @Param ('id') user_id: string,@Body() favoriteProductService:any) {
+   const {id: product_id} = favoriteProductService
+   return this.favoriteProductService.create(+user_id, product_id );
   }
 
-  @Get()
-  findAll() {
-    return this.favoriteProductService.findAll();
+  @Get(':id')
+  findAll(@Param('id') user_id: string) {
+    return this.favoriteProductService.findAll(+user_id);
   }
 
   @Get(':id')
@@ -29,6 +30,10 @@ export class FavoriteProductController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.favoriteProductService.remove(+id);
+    const result = this.favoriteProductService.remove(+id);
+    return {
+      message: "Xoa thanh cong",
+      data: result
+    }
   }
 }
