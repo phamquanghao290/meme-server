@@ -1,5 +1,6 @@
 import { Address } from 'src/modules/address/entities/address.entity';
 import { Cart } from 'src/modules/cart/entities/cart.entity';
+import { FavoriteProduct } from 'src/modules/favorite_product/entities/favorite_product.entity';
 import { Order } from 'src/modules/order/entities/order.entity';
 import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -48,4 +49,7 @@ export class User {
 
     @OneToMany(() => Cart, (cart) => cart.user)
     cart: Cart;
+
+    @OneToMany(() => FavoriteProduct, (favoriteProduct) => favoriteProduct.user)
+    favoriteProduct: FavoriteProduct[];
 }

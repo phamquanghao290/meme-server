@@ -3,7 +3,7 @@ import { SizeService } from './size.service';
 import { CreateSizeDto } from './dto/create-size.dto';
 import { UpdateSizeDto } from './dto/update-size.dto';
 
-@Controller('size')
+@Controller('api/size')
 export class SizeController {
   constructor(private readonly sizeService: SizeService) {}
 
@@ -12,7 +12,7 @@ export class SizeController {
     return this.sizeService.create(createSizeDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.sizeService.findAll();
   }

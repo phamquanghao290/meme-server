@@ -1,7 +1,7 @@
 import { ProductDetail } from 'src/modules/product_detail/entities/product_detail.entity';
 import { Product } from 'src/modules/products/entities/product.entity';
-import { SizeColor } from 'src/modules/size_color/entities/size_color.entity';
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Size } from 'src/modules/size/entities/size.entity';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('colors')
 export class Color {
@@ -14,6 +14,7 @@ export class Color {
     @OneToMany(() => ProductDetail, (productDetail) => productDetail.color)
     productDetail: ProductDetail[];
 
-    @OneToMany(() => SizeColor, (size_color) => size_color.color)
-    sizeColor: SizeColor[];
+    @ManyToOne(() => Size, (size) => size.color)
+    @JoinColumn({ name: 'size_id' })
+    size: Size[];
 }

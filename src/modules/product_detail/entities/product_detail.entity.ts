@@ -21,8 +21,7 @@ export class ProductDetail {
   })
   description: string;
 
-  @OneToMany(() => Cart, (cart) => cart.product_detail_id)
-  cart: Cart[];
+  
 
   @ManyToOne(() => Image, (image) => image.id)
   @JoinColumn({ name: 'image_id' })

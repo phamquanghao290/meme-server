@@ -1,4 +1,5 @@
 import { ProductDetail } from "src/modules/product_detail/entities/product_detail.entity";
+import { Product } from "src/modules/products/entities/product.entity";
 import { User } from "src/modules/user/entities/user.entity";
 import { PrimaryGeneratedColumn, Column, Entity, OneToOne, JoinColumn, OneToMany, ManyToOne } from "typeorm";
 
@@ -11,9 +12,9 @@ export class Cart {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => ProductDetail, (productDetail) => productDetail.cart, {cascade: true})
-  @JoinColumn({ name: 'product_detail_id' })
-  product_detail_id: ProductDetail;
+  @ManyToOne(() => Product, (product) => product.carts)
+   @JoinColumn({ name: 'product_id' })
+   product: Product;
 
   @Column()
   quantity: number;
