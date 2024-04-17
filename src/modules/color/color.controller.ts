@@ -3,7 +3,7 @@ import { ColorService } from './color.service';
 import { CreateColorDto } from './dto/create-color.dto';
 import { UpdateColorDto } from './dto/update-color.dto';
 
-@Controller('color')
+@Controller('api/color')
 export class ColorController {
   constructor(private readonly colorService: ColorService) {}
 
@@ -12,7 +12,7 @@ export class ColorController {
     return this.colorService.create(createColorDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.colorService.findAll();
   }

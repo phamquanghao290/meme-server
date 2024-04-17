@@ -17,11 +17,13 @@ export class ProductDetailController {
     return this.productDetailService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productDetailService.findOne(+id);
+  @Get()
+  findOne(id:number,color:number,size:number) {
+    return this.productDetailService.findOne(id,color,size);
   }
 
+
+  
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductDetailDto: UpdateProductDetailDto) {
     return this.productDetailService.update(+id, updateProductDetailDto);

@@ -3,6 +3,7 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { STATUS_CODES } from 'http';
+import { log } from 'console';
 
 @Controller('api/product')
 export class ProductsController {
@@ -26,6 +27,8 @@ export class ProductsController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
+    
+    
     return await this.productsService.findOne(+id);
   }
 

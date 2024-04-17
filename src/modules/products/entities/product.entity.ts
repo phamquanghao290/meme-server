@@ -1,6 +1,8 @@
 import { Brand } from 'src/modules/brand/entities/brand.entity';
+import { Cart } from 'src/modules/cart/entities/cart.entity';
 import { Category } from 'src/modules/category/entities/category.entity';
 import { Color } from 'src/modules/color/entities/color.entity';
+import { FavoriteProduct } from 'src/modules/favorite_product/entities/favorite_product.entity';
 import { OrderDetail } from 'src/modules/order-detail/entities/order-detail.entity';
 import { ProductDetail } from 'src/modules/product_detail/entities/product_detail.entity';
 import { Size } from 'src/modules/size/entities/size.entity';
@@ -58,4 +60,11 @@ export class Product {
 
   @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.product)
   orderDetail: OrderDetail;
+
+  @OneToMany(() => FavoriteProduct, (favoriteProduct) => favoriteProduct.product)
+  favoriteProduct: FavoriteProduct;
+
+
+  @OneToMany(() => Cart, (cart) => cart.product)
+  carts: Cart[];
 }
