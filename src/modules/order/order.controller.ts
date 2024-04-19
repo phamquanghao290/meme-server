@@ -9,7 +9,6 @@ export class OrderController {
 
   @Post('createOrder')
   create(@Body() createOrderDto: CreateOrderDto) {
-
     return this.orderService.createOrder(createOrderDto);
   }
 
@@ -18,14 +17,14 @@ export class OrderController {
     return this.orderService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.orderService.findOne(+id);
+  @Get('getorderById/:id')
+  async getBillById(@Param() id: any) {
+    return this.orderService.getBillById(id.id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.orderService.update(+id, updateOrderDto);
+  @Patch('/cancelOrder/:id')
+  update(@Param('id') id: string) {
+    return this.orderService.cancelOrder(+id);
   }
 
   @Delete(':id')
