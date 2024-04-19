@@ -29,8 +29,12 @@ export class OrderDetailService {
     return `This action returns all orderDetail`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} orderDetail`;
+  async findByOrder(id: number) {
+    const result = await this.billDetailRepository.createQueryBuilder('orderDetail')
+      .leftJoinAndSelect('orderDetail.product', 'productId')
+      .where('orderDetail.order = :id', { id })
+      .getMany();
+    return result;  
   }
 
   update(id: number, updateOrderDetailDto: UpdateOrderDetailDto) {

@@ -37,9 +37,10 @@ export class OrderDetailController {
     return this.orderDetailService.findAll();
   }
 
-  @Get('')
-  findOne(@Param('id') id: string) {
-    return this.orderDetailService.findOne(+id);
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    const result = await this.orderDetailService.findByOrder(+id);
+    return result;
   }
 
   @Patch(':id')

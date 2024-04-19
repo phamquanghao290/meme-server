@@ -5,11 +5,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-enum StatusOrder {
+export enum StatusOrder {
   Pending = 0,
   Accepted = 1,
   Completed = 2,
@@ -44,9 +45,10 @@ export class Order {
   @Column({
 
     type: 'enum',
-    enum: StatusOrder,
+      enum: StatusOrder,
+    default: StatusOrder.Pending,
   })
-  status_order: number;
+  status_order: StatusOrder;
 
   @Column({
     type: 'decimal',
@@ -55,6 +57,6 @@ export class Order {
   })
   total: number;
 
-  @OneToOne(() => OrderDetail, (orderDetail) => orderDetail.order)
+  @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.order)
   orderDetail: OrderDetail;
 }
