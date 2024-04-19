@@ -6,32 +6,31 @@ import { UpdateCartDto } from './dto/update-cart.dto';
 @Controller('api/cart')
 export class CartController {
   constructor(private readonly cartService: CartService) {}
- @Get("getCartByUserId/:id")
+  @Get('getCartByUserId/:id')
   async getCartByUserId(@Param() userId: any) {
-    return await this.cartService.findOne(Number(userId.id))
+    return await this.cartService.findOne(Number(userId.id));
   }
 
-  @Post("addToCart")
+  @Post('addToCart')
   async create(@Body() createCartDto: any) {
-    console.log(createCartDto);
-    const { product, userId, colorId ,sizeId } = createCartDto
-      return await this.cartService.create(userId,product,colorId,sizeId)
-    ;
+    const { product, userId } = createCartDto;
+    return await this.cartService.create(userId, product);
   }
 
   @Put('increase')
   async increase(@Body() createCartDto: any) {
-    return await this.cartService.increaseStock(createCartDto)
+    return await this.cartService.increaseStock(createCartDto);
   }
 
   @Put('decrease')
   async decrease(@Body() createCartDto: any) {
-    return await this.cartService.decreaseStock(createCartDto)
+    return await this.cartService.decreaseStock(createCartDto);
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return await this.cartService.findOne(+id);
+  @Get('all-cart')
+  async findAll() {
+    // lấy ra tất cả user_id trong bảng cart
+    return await this.cartService.findAll();
   }
 
   // @Patch(':id')
@@ -42,5 +41,9 @@ export class CartController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this.cartService.remove(+id);
+  }
+  @Delete('all/:id')
+  deleteCartUser(@Param('id') id: string) {
+    return this.cartService.deleteAll(+id);
   }
 }

@@ -4,8 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import config from 'ormconfig';
 import { MulterModule } from '@nestjs/platform-express';
 import { User } from './modules/user/entities/user.entity';
-import { Size } from './modules/size/entities/size.entity';
-import { SizeModule } from './modules/size/size.module';
+
 import { Product } from './modules/products/entities/product.entity';
 import { ProductsModule } from './modules/products/products.module';
 import { Brand } from './modules/brand/entities/brand.entity';
@@ -16,8 +15,7 @@ import { Image } from './modules/image/entities/image.entity';
 import { ImageModule } from './modules/image/image.module';
 import { Order } from './modules/order/entities/order.entity';
 import { OrderModule } from './modules/order/order.module';
-import { Color } from './modules/color/entities/color.entity';
-import { ColorModule } from './modules/color/color.module';
+
 import { Address } from './modules/address/entities/address.entity';
 import { AddressModule } from './modules/address/address.module';
 import { FavoriteProduct } from './modules/favorite_product/entities/favorite_product.entity';
@@ -33,9 +31,6 @@ import { AuthModule } from './modules/auth/auth.module';
 import { Banner } from './modules/banner/entities/banner.entity';
 import { BannerModule } from './modules/banner/banner.module';
 
-
-
-
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -45,25 +40,38 @@ import { BannerModule } from './modules/banner/banner.module';
       username: 'root',
       password: '',
       database: 'ojt-ec',
-      entities: [User, Size, Product, Brand, Category, Image, Order, Color, Address, FavoriteProduct, OrderDetail, Cart, ProductDetail,Banner],
+      entities: [
+        User,
+        Product,
+        Brand,
+        Category,
+        Image,
+        Order,
+        Address,
+        FavoriteProduct,
+        OrderDetail,
+        Cart,
+        ProductDetail,
+        Banner,
+      ],
       synchronize: true,
-    }), 
+    }),
     UserModule,
-    SizeModule, 
-    ProductsModule, 
-    BrandModule, 
-    CategoryModule, 
+
+    ProductsModule,
+    BrandModule,
+    CategoryModule,
     ImageModule,
     OrderModule,
-    ColorModule,
+
     AddressModule,
     FavoriteProductModule,
     OrderDetailModule,
     CartModule,
     ProductDetailModule,
-  
+
     AuthModule,
-    BannerModule
+    BannerModule,
   ],
   controllers: [],
   providers: [],
