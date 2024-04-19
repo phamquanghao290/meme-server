@@ -11,7 +11,7 @@ export class ProductDetailController {
   create(@Body() createProductDetailDto: CreateProductDetailDto) {
     return this.productDetailService.create(createProductDetailDto);
   }
-
+  
   @Get()
   findAll() {
     return this.productDetailService.findAll();

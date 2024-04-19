@@ -26,22 +26,20 @@ export class ProductsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    
-    
-    return await this.productsService.findOne(+id);
+  findOne(@Param('id') id: any) {
+    return this.productsService.findOne(id);
   }
 
-  @Put(':id')
-  async update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    const result = await this.productsService.update(+id, updateProductDto);
-    const allProducts = await this.productsService.findAll();
-    return {
-      message: 'Cập nhật sản phẩm thành công',
-      data: allProducts,
-      STATUS_CODES: STATUS_CODES.OK
-    }
-  }
+  // @Put(':id')
+  // async update(@Param('id') id: string, @Body() updateProductDto: any) {
+  //   const result = await this.productsService.update(+id, updateProductDto);
+  //   const allProducts = await this.productsService.findAll();
+  //   return {
+  //     message: 'Cập nhật sản phẩm thành công',
+  //     data: allProducts,
+  //     STATUS_CODES: STATUS_CODES.OK
+  //   }
+  // }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {

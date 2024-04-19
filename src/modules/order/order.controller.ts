@@ -7,9 +7,10 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
-  @Post()
+  @Post('createOrder')
   create(@Body() createOrderDto: CreateOrderDto) {
-    return this.orderService.create(createOrderDto);
+
+    return this.orderService.createOrder(createOrderDto);
   }
 
   @Get()

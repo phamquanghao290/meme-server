@@ -21,15 +21,12 @@ export class CartService {
       .andWhere({ product: productId })
       .getMany();
   }
-  async create(userId: any, product: any, colorId: any, sizeId: any) {
+  async create(userId: any, product: any) {
     const check = await this.getCartByUserId(userId, product.id);
     if (check.length > 0) {
-      const cart = check[0];
-      cart.quantity = cart.quantity + 1;
-      return  {
-        message: 'tang so luong',
-        data: this.cartRepository.save(cart)
-      }
+      return {
+        message: 'already in the cart',
+      };
     } else {
       const newCart = this.cartRepository
         .createQueryBuilder('cart')
@@ -41,9 +38,9 @@ export class CartService {
           quantity: 1,
         });
       return {
-        message:"them thanh cong",
-         data: newCart.execute()
-      }
+        message: 'Product added to cart',
+        data: newCart.execute(),
+      };
     }
   }
   async findOne(id: number) {
@@ -51,6 +48,15 @@ export class CartService {
       .createQueryBuilder('cart')
       .select()
       .where('cart.user_id = :id', { id })
+      .innerJoinAndSelect('cart.product', 'product')
+      .getMany();
+  }
+
+  async findAll() {
+    // lấy ra tất cả user_id trong bảng cart
+    return await this.cartRepository
+      .createQueryBuilder('cart')
+      .select()
       .innerJoinAndSelect('cart.product', 'product')
       .getMany();
   }
@@ -65,29 +71,35 @@ export class CartService {
   }
 
   async increaseStock(createCartDto: any) {
-    console.log(createCartDto)
     const cart = await this.cartRepository.findOneOrFail({
-      where: {id: createCartDto.id},
-    })
-    console.log(cart)
-    cart.quantity = cart.quantity + 1
-    return await this.cartRepository.save(cart)
+      where: { id: createCartDto.id },
+    });
+    cart.quantity = cart.quantity + 1;
+    return await this.cartRepository.save(cart);
   }
 
   async decreaseStock(createCartDto: any) {
     const cart = await this.cartRepository.findOneOrFail({
-      where: {id: createCartDto.id},
-    })
-    cart.quantity = cart.quantity - 1
-    return await this.cartRepository.save(cart)
+      where: { id: createCartDto.id },
+    });
+    cart.quantity = cart.quantity - 1;
+    return await this.cartRepository.save(cart);
   }
 
   async remove(id: number) {
     await this.cartRepository.delete(id);
     return {
       status: 'success',
-      message: 'Xóa thành công',
-    }
-
+      message: 'deleted successfully',
+    };
+  }
+  async deleteAll(userId: number) {
+    await this.cartRepository
+      .createQueryBuilder()
+      .delete()
+      .from(Cart)
+      .where('user = :user', { user: userId })
+      .execute();
+    return `Xoá cart thành công`;
   }
 }

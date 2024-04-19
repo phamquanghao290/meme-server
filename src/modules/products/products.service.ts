@@ -7,7 +7,10 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class ProductsService {
-  constructor(@InjectRepository(Product) private readonly productRepos: Repository<Product>) {}
+  constructor(
+    @InjectRepository(Product)
+    private readonly productRepos: Repository<Product>,
+  ) {}
 
   async create(createProductDto: any) {
     console.log(createProductDto);
@@ -28,14 +31,17 @@ export class ProductsService {
   }
 
   async findAll() {
-    return await this.productRepos.find();
+    return await this.productRepos.find({ relations: ['category', 'brand'] });
   }
 
   async findOne(id: number) {
-    return await this.productRepos.findOne({where: {id}});
+    return await this.productRepos.findOne({
+      where: { id },
+      relations: ['category', 'brand'],
+    });
   }
 
-  async update(id: number, updateProductDto: UpdateProductDto) {
+  async update(id: number, updateProductDto: any) {
     const updateProduct = await this.productRepos
       .createQueryBuilder()
       .update(Product)
