@@ -13,7 +13,7 @@ export class OrderService {
   ) {}
   async createOrder(orderData: any) {
     // Xử lý logic tạo đơn hàng và lưu vào cơ sở dữ liệu
-    console.log(orderData);
+
     const { userID, user_name, address, phone, status, total, addresscity } =
       orderData;
     const createdOrder = this.oderRepository.create({
@@ -40,13 +40,18 @@ export class OrderService {
       .getMany();
   }
   async cancelOrder(id: number) {
-    await this.oderRepository.createQueryBuilder().update(Order).set({
-      status_order: StatusOrder.Canceled,
-    })
-    .where({ id: id }).execute();
-      
+    await this.oderRepository
+      .createQueryBuilder()
+      .update(Order)
+      .set({
+        status_order: StatusOrder.Canceled,
+      })
+      .where({ id: id })
+      .execute();
+
     return 'Cancelled successfully';
   }
+
 
   async acceptOrder(id: number) {
     await this.oderRepository.createQueryBuilder().update(Order).set({
@@ -56,6 +61,7 @@ export class OrderService {
       
     return 'Accepted successfully';
   }
+
   remove(id: number) {
     return `This action removes a #${id} order`;
   }

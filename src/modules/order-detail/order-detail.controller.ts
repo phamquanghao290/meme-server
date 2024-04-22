@@ -16,18 +16,20 @@ export class OrderDetailController {
   constructor(private readonly orderDetailService: OrderDetailService) {}
 
   @Post('createBillDetails')
-  async create(@Body() createOrderDetailDto: any) {
+  async create(@Body() createOrderDetailDto: CreateOrderDetailDto) {
     const { order_id, productsId, quantity } = createOrderDetailDto;
 
     return await this.orderDetailService.createBillDetailer(
       order_id,
       productsId,
       quantity,
-    );
-    // await this.orderDetailService.updateStocksProduct(
-    //   productsId.idProducts,
-    //   quantity,
-    // )
+    ),
+     
+      
+    await this.orderDetailService.updateStocksProduct(
+      productsId,
+      quantity,
+    )
 
     // return this.orderDetailService.create(createOrderDetailDto);
   }
@@ -38,21 +40,21 @@ export class OrderDetailController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: CreateOrderDetailDto) {
     const result = await this.orderDetailService.findByOrder(+id);
     return result;
   }
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id') id: CreateOrderDetailDto,
     @Body() updateOrderDetailDto: UpdateOrderDetailDto,
   ) {
     return this.orderDetailService.update(+id, updateOrderDetailDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: CreateOrderDetailDto) {
     return this.orderDetailService.remove(+id);
   }
 }
