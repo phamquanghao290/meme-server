@@ -4,6 +4,7 @@ import { UpdateOrderDetailDto } from './dto/update-order-detail.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OrderDetail } from './entities/order-detail.entity';
 import { Repository } from 'typeorm';
+import { Product } from '../products/entities/product.entity';
 
 @Injectable()
 export class OrderDetailService {
@@ -24,6 +25,16 @@ export class OrderDetailService {
     const data = await this.billDetailRepository.create(createOderDetail);
     await this.billDetailRepository.save(data);
     return 'more success';
+  }
+  async updateStocksProduct(productId: number, quantity: number) {
+    await this.billDetailRepository
+      .createQueryBuilder()
+      .update(Product)
+      .set({
+        stock: () => `stock - ${quantity}`,
+      })
+      .where('id = :id', { id: productId })
+      .execute();
   }
   findAll() {
     return `This action returns all orderDetail`;
