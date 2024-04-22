@@ -27,6 +27,13 @@ export class OrderController {
     return this.orderService.cancelOrder(+id);
   }
 
+  @Patch('/acceptOrder/:id')
+  updateStatus(@Param('id') id: string) {
+    return this.orderService.acceptOrder(+id);
+  }
+
+  
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.orderService.remove(+id);
