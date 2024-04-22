@@ -100,6 +100,6 @@ export class CartService {
       .from(Cart)
       .where('user = :user', { user: userId })
       .execute();
-    return `Xoá cart thành công`;
+    return `Deleted cart successfully`;
   }
 }

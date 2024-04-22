@@ -45,7 +45,7 @@ export class OrderService {
     })
     .where({ id: id }).execute();
       
-    return 'Đã huỷ thành công';
+    return 'Cancelled successfully';
   }
 
   remove(id: number) {
