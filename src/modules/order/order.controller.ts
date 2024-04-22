@@ -36,6 +36,13 @@ export class OrderController {
     //  await this.orderService.updateStocksProduct(+id,1)
   }
 
+  @Patch('/acceptOrder/:id')
+  updateStatus(@Param('id') id: string) {
+    return this.orderService.acceptOrder(+id);
+  }
+
+  
+
   @Delete(':id')
   remove(@Param('id') id: CreateOrderDto) {
     return this.orderService.remove(+id);

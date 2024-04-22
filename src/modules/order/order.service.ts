@@ -30,7 +30,7 @@ export class OrderService {
   }
 
   findAll() {
-    return `This action returns all order`;
+    return this.oderRepository.find();
   }
 
   async getBillById(id: any) {
@@ -51,7 +51,17 @@ export class OrderService {
 
     return 'Cancelled successfully';
   }
- 
+
+
+  async acceptOrder(id: number) {
+    await this.oderRepository.createQueryBuilder().update(Order).set({
+      status_order: StatusOrder.Accepted,
+    })
+    .where({ id: id }).execute();
+      
+    return 'Accepted successfully';
+  }
+
   remove(id: number) {
     return `This action removes a #${id} order`;
   }
