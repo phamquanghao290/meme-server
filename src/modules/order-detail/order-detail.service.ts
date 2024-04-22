@@ -23,18 +23,19 @@ export class OrderDetailService {
     };
     const data = await this.billDetailRepository.create(createOderDetail);
     await this.billDetailRepository.save(data);
-    return 'them thanh cong';
+    return 'more success';
   }
   findAll() {
     return `This action returns all orderDetail`;
   }
 
   async findByOrder(id: number) {
-    const result = await this.billDetailRepository.createQueryBuilder('orderDetail')
+    const result = await this.billDetailRepository
+      .createQueryBuilder('orderDetail')
       .leftJoinAndSelect('orderDetail.product', 'productId')
       .where('orderDetail.order = :id', { id })
       .getMany();
-    return result;  
+    return result;
   }
 
   update(id: number, updateOrderDetailDto: UpdateOrderDetailDto) {
