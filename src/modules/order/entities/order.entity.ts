@@ -30,15 +30,18 @@ export class Order {
     type: 'text',
   })
   address: string;
+  
   @Column({
     type: 'text',
   })
   addressCity: string;
+
   @Column({
     type: 'varchar',
     length: 255,
   })
   user_name: string;
+
   @Column()
   phone: string;
 

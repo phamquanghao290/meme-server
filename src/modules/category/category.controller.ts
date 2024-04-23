@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -42,6 +50,7 @@ export class CategoryController {
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
+    console.log(id);
     const result = await this.categoryService.remove(+id);
     const allCategory = await this.categoryService.findAll();
     return { message: 'Xóa thành công', data: allCategory };

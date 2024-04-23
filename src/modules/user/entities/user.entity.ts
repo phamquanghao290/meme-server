@@ -1,4 +1,3 @@
-import { Address } from 'src/modules/address/entities/address.entity';
 import { Cart } from 'src/modules/cart/entities/cart.entity';
 import { FavoriteProduct } from 'src/modules/favorite_product/entities/favorite_product.entity';
 import { Order } from 'src/modules/order/entities/order.entity';
@@ -40,9 +39,6 @@ export class User {
         default: 1,
     })
     status: number;
-
-    @OneToMany(() => Address, (address) => address.user)
-    address: Address[];
 
     @OneToMany(() => Order, (order) => order.user)
     order: Order[];

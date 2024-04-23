@@ -15,9 +15,6 @@ import { Image } from './modules/image/entities/image.entity';
 import { ImageModule } from './modules/image/image.module';
 import { Order } from './modules/order/entities/order.entity';
 import { OrderModule } from './modules/order/order.module';
-
-import { Address } from './modules/address/entities/address.entity';
-import { AddressModule } from './modules/address/address.module';
 import { FavoriteProduct } from './modules/favorite_product/entities/favorite_product.entity';
 import { FavoriteProductModule } from './modules/favorite_product/favorite_product.module';
 import { OrderDetail } from './modules/order-detail/entities/order-detail.entity';
@@ -33,43 +30,18 @@ import { BannerModule } from './modules/banner/banner.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '',
-      database: 'ojt-ec',
-      entities: [
-        User,
-        Product,
-        Brand,
-        Category,
-        Image,
-        Order,
-        Address,
-        FavoriteProduct,
-        OrderDetail,
-        Cart,
-        ProductDetail,
-        Banner,
-      ],
-      synchronize: true,
-    }),
+    TypeOrmModule.forRoot(config),
+    MulterModule.register({dest: './upload',}),
     UserModule,
-
     ProductsModule,
     BrandModule,
     CategoryModule,
     ImageModule,
     OrderModule,
-
-    AddressModule,
     FavoriteProductModule,
     OrderDetailModule,
     CartModule,
     ProductDetailModule,
-
     AuthModule,
     BannerModule,
   ],
